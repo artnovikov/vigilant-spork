@@ -3,11 +3,14 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Models\Review;
 
 class Reply extends Model
 {
+    use HasFactory;
+
     protected $fillable = ['text', 'review_id', 'user_id'];
 
     protected $hidden = ['review_id', 'user_id', 'updated_at'];
