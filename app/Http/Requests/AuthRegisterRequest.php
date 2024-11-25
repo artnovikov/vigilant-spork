@@ -2,11 +2,9 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Contracts\Validation\Validator;
-use Illuminate\Validation\ValidationException;
+use App\Http\Requests\BaseFormRequest;
 
-class AuthRegisterRequest extends FormRequest
+class AuthRegisterRequest extends BaseFormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -28,10 +26,5 @@ class AuthRegisterRequest extends FormRequest
             'email' => ['required', 'email', 'unique:users'],
             'password' => ['required', 'string', 'min:8'],
         ];
-    }
-
-    protected function failedValidation(Validator $validator): ValidatorException
-    {
-        throw new ValidationException($validator, response()->json(['errors' => $validator->errors()]));
     }
 }

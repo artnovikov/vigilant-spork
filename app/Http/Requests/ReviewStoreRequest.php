@@ -2,18 +2,16 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\ValidationException;
-use Illuminate\Contracts\Validation\Validator;
+use App\Http\Requests\BaseFormRequest;
 
-class ReviewStoreRequest extends FormRequest
+class ReviewStoreRequest extends BaseFormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return true;
+        return auth()->check();
     }
 
     /**
@@ -26,10 +24,5 @@ class ReviewStoreRequest extends FormRequest
         return [
             'text' => ['required', 'string', 'max:1000'],
         ];
-    }
-
-    protected function failedValidation(Validator $validator): ValidationException
-    {
-        throw new ValidationException($validator, response()->json(['errors' => $validator->errors()]));
     }
 }
