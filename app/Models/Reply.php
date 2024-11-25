@@ -5,8 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use App\Models\Review;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 
+use App\Models\Review;
+use App\Observers\ReplyObserver;
+
+#[ObservedBy([ReplyObserver::class])]
 class Reply extends Model
 {
     use HasFactory;

@@ -20,8 +20,6 @@ class ReplyController extends Controller
         $validated['user_id'] = auth()->user()->id;
         $reply = Reply::query()->create($validated)->load('user');
 
-        broadcast(new ReplyAdded($reply, $reply->review->user))->toOthers();
-
         return response()->json($reply, Response::HTTP_CREATED);
     }
 }

@@ -37,7 +37,12 @@ class ReplyAdded implements ShouldBroadcast
     public function broadcastOn(): array
     {
         return [
-            new PrivateChannel("user.{$this->user->id}"),
+            new PrivateChannel("reply.added.to.user.{$this->user->id}"),
         ];
+    }
+
+    public function broadcastAs(): string
+    {
+        return 'reply-added';
     }
 }

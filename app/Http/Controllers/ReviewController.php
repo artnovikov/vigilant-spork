@@ -9,7 +9,6 @@ use Illuminate\Pagination\Paginator;
 
 use App\Models\Review;
 use App\Http\Requests\ReviewStoreRequest;
-use App\Events\ReviewAdded;
 
 
 class ReviewController extends Controller
@@ -26,10 +25,8 @@ class ReviewController extends Controller
         $validated = $request->validated();
 
         try {
-            $validated['user_id'] = auth()->user()->idd;
+            $validated['user_id'] = auth()->user()->id;
             $review = Review::query()->create($validated)->load('user');
-
-            broadcast(new ReviewAdded($review))->toOthers();
 
             return response()->json($review, Response::HTTP_CREATED);
         } catch (\Exception $ex) {

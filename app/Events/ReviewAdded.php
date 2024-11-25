@@ -38,8 +38,8 @@ class ReviewAdded implements ShouldBroadcast
         ];
     }
 
-    public function broadcastWith(): array
+    public function broadcastAs(): string
     {
-        return ['key' => 'value'];
+        return 'review-added';
     }
 }
