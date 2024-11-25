@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Log;
 
 use App\Models\Review;
 use App\Http\Requests\ReviewStoreRequest;
@@ -30,7 +31,8 @@ class ReviewController extends Controller
 
             return response()->json($review, Response::HTTP_CREATED);
         } catch (\Exception $ex) {
-            return response()->json($ex->getMessage(), Response::HTTP_OK);
+            Log::critical($ex->getMessage());
+            return response()->json(['error' => 'Call the support'], Response::HTTP_OK);
         }
     }
 }

@@ -16,10 +16,16 @@ class ReplyController extends Controller
     public function store(ReplyStoreRequest $request, Review $review): JsonResponse
     {
         $validated = $request->validated();
-        $validated['review_id'] = $review->id;
-        $validated['user_id'] = auth()->user()->id;
-        $reply = Reply::query()->create($validated)->load('user');
+        
+        try {
+            $validated['review_id'] = $review->id;
+            $validated['user_id'] = auth()->user()->id;
+            $reply = Reply::query()->create($validated)->load('user');
 
-        return response()->json($reply, Response::HTTP_CREATED);
+            return response()->json($reply, Response::HTTP_CREATED);
+        } catch (\Exception $ex) {
+            Log::critical($ex->getMessage());
+            return response()->json(['error' => 'Call the support'], Response::HTTP_OK);
+        }        
     }
 }
